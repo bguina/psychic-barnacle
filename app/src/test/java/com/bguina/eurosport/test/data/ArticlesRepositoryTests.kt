@@ -17,6 +17,7 @@ import org.hamcrest.CoreMatchers
 import org.hamcrest.CoreMatchers.instanceOf
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -37,7 +38,7 @@ class ArticlesRepositoryTests {
     }
 
     @Test
-    fun `articles should be a mix of stories and videos`() {
+    fun `articles should alternate between stories and videos`() {
         // Given
         val stories = listOf(
             StoryEntity(),
@@ -45,7 +46,6 @@ class ArticlesRepositoryTests {
             StoryEntity(),
         )
         val videos = listOf(
-            VideoEntity(),
             VideoEntity(),
             VideoEntity(),
         )
@@ -59,12 +59,11 @@ class ArticlesRepositoryTests {
         runTest {
             val results = subject.listArticles()
 
-            MatcherAssert.assertThat(results[0], instanceOf(Article.Story::class.java))
-            MatcherAssert.assertThat(results[1], instanceOf(Article.Video::class.java))
-            MatcherAssert.assertThat(results[2], instanceOf(Article.Story::class.java))
-            MatcherAssert.assertThat(results[3], instanceOf(Article.Video::class.java))
-            MatcherAssert.assertThat(results[4], instanceOf(Article.Story::class.java))
-            MatcherAssert.assertThat(results[5], instanceOf(Article.Video::class.java))
+            assertThat(results[0], instanceOf(Article.Story::class.java))
+            assertThat(results[1], instanceOf(Article.Video::class.java))
+            assertThat(results[2], instanceOf(Article.Story::class.java))
+            assertThat(results[3], instanceOf(Article.Video::class.java))
+            assertThat(results[4], instanceOf(Article.Story::class.java))
         }
     }
 }
