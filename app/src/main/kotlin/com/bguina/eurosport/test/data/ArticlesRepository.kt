@@ -7,5 +7,5 @@ import javax.inject.Inject
 class ArticlesRepository @Inject constructor(
     private val articlesDataSource: IArticlesDataSource,
 ) : IArticlesRepository {
-    override suspend fun listArticles(): List<Article> = articlesDataSource.listArticles()
+    override suspend fun listArticles(): List<Article> = TODO()
 }

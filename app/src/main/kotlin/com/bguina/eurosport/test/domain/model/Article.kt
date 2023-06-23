@@ -1,7 +1,16 @@
 package com.bguina.eurosport.test.domain.model
 
-class Article(
-    val date: Long = 0,
-    val content: String = "",
-    val videoUrl: String = "",
-)
+sealed class Article(
+    val date: Long,
+) {
+    class Story(
+        date: Long = 0,
+        val content: String = "",
+        val imageUrl: String = "",
+    ) : Article(date)
+
+    class Video(
+        date: Long = 0,
+        val videoUrl: String = "",
+    ) : Article(date)
+}

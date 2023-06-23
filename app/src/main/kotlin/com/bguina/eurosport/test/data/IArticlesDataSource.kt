@@ -1,7 +1,10 @@
 package com.bguina.eurosport.test.data
 
-import com.bguina.eurosport.test.domain.model.Article
+import com.bguina.eurosport.test.data.model.StoryEntity
+import com.bguina.eurosport.test.data.model.VideoEntity
 
 interface IArticlesDataSource {
-    suspend fun listArticles() : List<Article>
+    suspend fun listStories() : List<StoryEntity>
+
+    suspend fun listVideos() : List<VideoEntity>
 }

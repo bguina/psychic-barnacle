@@ -35,9 +35,9 @@ class ListSportArticlesUseCaseTests {
     fun `articles should be sorted by date`() {
         // Given
         val articles = listOf(
-            Article(date = 2),
-            Article(date = 1),
-            Article(date = 3),
+            Article.Story(date = 2),
+            Article.Story(date = 1),
+            Article.Story(date = 3),
         )
         coEvery { articlesRepository.listArticles() } returns articles
 

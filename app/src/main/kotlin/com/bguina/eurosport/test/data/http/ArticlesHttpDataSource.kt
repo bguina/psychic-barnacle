@@ -1,6 +1,8 @@
 package com.bguina.eurosport.test.data.http
 
 import com.bguina.eurosport.test.data.IArticlesDataSource
+import com.bguina.eurosport.test.data.model.StoryEntity
+import com.bguina.eurosport.test.data.model.VideoEntity
 import com.bguina.eurosport.test.domain.model.Article
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -20,8 +22,11 @@ class ArticlesHttpDataSource @Inject constructor(
         .addInterceptor(HttpLoggingInterceptor())
         .build()
 
+    override suspend fun listStories(): List<StoryEntity> {
+        TODO("Not yet implemented")
+    }
 
-    override suspend fun listArticles(): List<Article> {
+    override suspend fun listVideos(): List<VideoEntity> {
         TODO("Not yet implemented")
     }
 }
