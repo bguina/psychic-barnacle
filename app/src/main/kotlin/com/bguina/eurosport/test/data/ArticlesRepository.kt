@@ -10,6 +10,7 @@ import javax.inject.Inject
 class ArticlesRepository @Inject constructor(
     private val articlesDataSource: IArticlesDataSource,
 ) : IArticlesRepository {
+
     override suspend fun listArticles(): List<Article> {
         val stories = articlesDataSource.listStories()
         val videos = articlesDataSource.listVideos()
@@ -21,6 +22,14 @@ class ArticlesRepository @Inject constructor(
             .filterNotNull()
     }
 
-    private fun StoryEntity.toDomain(): Article.Story = Article.Story()
-    private fun VideoEntity.toDomain(): Article.Video = Article.Video()
+    private fun StoryEntity.toDomain(): Article.Story = Article.Story(
+        date = this.date ?: throw NoSuchFieldException("date"),
+        content = this.content ?: throw NoSuchFieldException("content"),
+        imageUrl = this.imageUrl ?: throw NoSuchFieldException("imageUrl"),
+    )
+
+    private fun VideoEntity.toDomain(): Article.Video = Article.Video(
+        date = this.date ?: throw NoSuchFieldException("date"),
+        videoUrl = this.url ?: throw NoSuchFieldException("url"),
+    )
 }

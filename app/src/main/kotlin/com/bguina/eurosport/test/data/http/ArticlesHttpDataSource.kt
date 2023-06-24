@@ -41,11 +41,13 @@ class ArticlesHttpDataSource @Inject constructor(
         .map { it.toEntity() }
 
     private fun StoryDto.toEntity(): StoryEntity = StoryEntity(
+        date = this.date?.toLong(),
         content = this.teaser,
         imageUrl = this.image,
     )
 
     private fun VideoDto.toEntity(): VideoEntity = VideoEntity(
+        date = this.date?.toLong(),
         url = this.url,
     )
 }

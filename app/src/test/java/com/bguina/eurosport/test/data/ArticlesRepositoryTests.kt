@@ -2,8 +2,6 @@ package com.bguina.eurosport.test.data
 
 import com.bguina.eurosport.test.data.model.StoryEntity
 import com.bguina.eurosport.test.data.model.VideoEntity
-import com.bguina.eurosport.test.domain.IArticlesRepository
-import com.bguina.eurosport.test.domain.interactor.ListSportArticlesUseCase
 import com.bguina.eurosport.test.domain.model.Article
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -13,10 +11,7 @@ import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import org.hamcrest.CoreMatchers
 import org.hamcrest.CoreMatchers.instanceOf
-import org.hamcrest.CoreMatchers.`is`
-import org.hamcrest.MatcherAssert
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
 import org.junit.Before
