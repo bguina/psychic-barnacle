@@ -1,4 +1,4 @@
-package com.bguina.eurosport.test
+package com.bguina.eurosport.test.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
