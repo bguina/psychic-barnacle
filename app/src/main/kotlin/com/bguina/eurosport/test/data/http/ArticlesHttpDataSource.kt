@@ -14,7 +14,6 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Inject
 
 class ArticlesHttpDataSource @Inject constructor(
-
 ) : IArticlesDataSource {
 
     private val moshi = Moshi.Builder()
@@ -31,7 +30,7 @@ class ArticlesHttpDataSource @Inject constructor(
         .client(client)
         .build()
         .create(ArticlesService::class.java)
-    
+
     override suspend fun listStories(
     ): List<StoryEntity> = service.listStoriesAndVideos().stories.orEmpty()
         .map { it.toEntity() }
@@ -44,10 +43,12 @@ class ArticlesHttpDataSource @Inject constructor(
         date = this.date?.toLong(),
         content = this.teaser,
         imageUrl = this.image,
+        author = this.author,
     )
 
     private fun VideoDto.toEntity(): VideoEntity = VideoEntity(
         date = this.date?.toLong(),
         url = this.url,
+        viewCount = this.views,
     )
 }

@@ -16,5 +16,5 @@ data class VideoDto(
     @Json(name = "url")
     val url: String? = null,
     @Json(name = "views")
-    val views: Int? = null
+    val views: Long? = null
 )
