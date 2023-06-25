@@ -10,6 +10,7 @@ import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
+import org.hamcrest.CoreMatchers.instanceOf
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
@@ -17,13 +18,14 @@ import org.junit.Before
 import org.junit.Test
 
 class ListSportArticlesUseCaseTests {
+
     @MockK
     private lateinit var articlesRepository: IArticlesRepository
 
     @Before
     fun setUp() {
-        Dispatchers.setMain(UnconfinedTestDispatcher())
         MockKAnnotations.init(this, relaxUnitFun = true)
+        Dispatchers.setMain(UnconfinedTestDispatcher())
     }
 
     @After
@@ -32,25 +34,54 @@ class ListSportArticlesUseCaseTests {
     }
 
     @Test
-    fun `articles should be sorted by date`() {
-        // Given
-        val articles = listOf(
-            Article.Story(date = 2),
+    fun `resulting stories and videos should remain sorted by date asc`() {
+        coEvery { articlesRepository.listArticlesByDateAsc() } returns listOf(
             Article.Story(date = 1),
-            Article.Story(date = 3),
+            Article.Story(date = 2),
+            Article.Video(date = 3),
+            Article.Video(date = 4),
+            Article.Story(date = 5),
+            Article.Video(date = 6),
         )
-        coEvery { articlesRepository.listArticles() } returns articles
 
-        // When
         val subject = ListSportArticlesUseCase(
             articlesRepository = articlesRepository,
         )
         runTest {
             val results = subject.invoke()
 
-            assertThat(results[0], `is`(articles[1]))
-            assertThat(results[1], `is`(articles[0]))
-            assertThat(results[2], `is`(articles[2]))
+            val resultingStories = results.filterIsInstance<Article.Story>()
+            val resultingVideos = results.filterIsInstance<Article.Video>()
+            assertThat(resultingStories, `is`(resultingStories.sortedBy { it.date }))
+            assertThat(resultingVideos, `is`(resultingVideos.sortedBy { it.date }))
+        }
+    }
+
+    @Test
+    fun `articles should alternate between stories and videos`() {
+        coEvery { articlesRepository.listArticlesByDateAsc() } returns listOf(
+            Article.Story(date = 1),
+            Article.Story(date = 2),
+            Article.Video(date = 3),
+            Article.Video(date = 4),
+            Article.Story(date = 5),
+        )
+
+        val subject = ListSportArticlesUseCase(
+            articlesRepository = articlesRepository,
+        )
+        runTest {
+            val results = subject.invoke()
+
+            var expectStory = results.firstOrNull() is Article.Story
+            results.forEach { result->
+                if (expectStory) {
+                    assertThat(result, instanceOf(Article.Story::class.java))
+                } else {
+                    assertThat(result, instanceOf(Article.Video::class.java))
+                }
+                expectStory = !expectStory
+            }
         }
     }
 }

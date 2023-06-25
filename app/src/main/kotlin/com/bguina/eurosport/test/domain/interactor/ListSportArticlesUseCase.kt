@@ -7,6 +7,6 @@ import javax.inject.Inject
 class ListSportArticlesUseCase @Inject constructor(
     private val articlesRepository: IArticlesRepository,
 ) {
-    suspend operator fun invoke() : List<Article> = articlesRepository.listArticles()
+    suspend operator fun invoke() : List<Article> = articlesRepository.listArticlesByDateAsc()
         .sortedWith(compareBy { it.date })
 }

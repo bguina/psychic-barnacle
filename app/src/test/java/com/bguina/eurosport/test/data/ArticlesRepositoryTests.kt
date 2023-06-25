@@ -2,7 +2,6 @@ package com.bguina.eurosport.test.data
 
 import com.bguina.eurosport.test.data.model.StoryEntity
 import com.bguina.eurosport.test.data.model.VideoEntity
-import com.bguina.eurosport.test.domain.model.Article
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
@@ -11,20 +10,21 @@ import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import org.hamcrest.CoreMatchers.instanceOf
+import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
 class ArticlesRepositoryTests {
+
     @MockK
     private lateinit var articlesDataSource: IArticlesDataSource
 
     @Before
     fun setUp() {
-        Dispatchers.setMain(UnconfinedTestDispatcher())
         MockKAnnotations.init(this, relaxUnitFun = true)
+        Dispatchers.setMain(UnconfinedTestDispatcher())
     }
 
     @After
@@ -33,16 +33,16 @@ class ArticlesRepositoryTests {
     }
 
     @Test
-    fun `articles should alternate between stories and videos`() {
+    fun `listArticlesByDateAsc should list articles sorted by date asc`() {
         // Given
         val stories = listOf(
-            StoryEntity(),
-            StoryEntity(),
-            StoryEntity(),
+            StoryEntity(date = 1, content = "", imageUrl = "", author = ""),
+            StoryEntity(date = 3, content = "", imageUrl = "", author = ""),
+            StoryEntity(date = 2, content = "", imageUrl = "", author = ""),
         )
         val videos = listOf(
-            VideoEntity(),
-            VideoEntity(),
+            VideoEntity(date = 5, url = "", viewCount = 0),
+            VideoEntity(date = 3, url = "", viewCount = 0),
         )
         coEvery { articlesDataSource.listStories() } returns stories
         coEvery { articlesDataSource.listVideos() } returns videos
@@ -52,13 +52,9 @@ class ArticlesRepositoryTests {
             articlesDataSource = articlesDataSource,
         )
         runTest {
-            val results = subject.listArticles()
+            val results = subject.listArticlesByDateAsc()
 
-            assertThat(results[0], instanceOf(Article.Story::class.java))
-            assertThat(results[1], instanceOf(Article.Video::class.java))
-            assertThat(results[2], instanceOf(Article.Story::class.java))
-            assertThat(results[3], instanceOf(Article.Video::class.java))
-            assertThat(results[4], instanceOf(Article.Story::class.java))
+            assertThat(results, `is`(results.sortedBy { it.date }))
         }
     }
 }

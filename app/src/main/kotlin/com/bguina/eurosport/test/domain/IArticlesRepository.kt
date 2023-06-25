@@ -4,5 +4,5 @@ import com.bguina.eurosport.test.domain.model.Article
 
 interface IArticlesRepository {
 
-    suspend fun listArticles() : List<Article>
+    suspend fun listArticlesByDateAsc() : List<Article>
 }
