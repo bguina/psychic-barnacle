@@ -1,4 +1,4 @@
-package com.bguina.eurosport.test.presentation.ui.home
+package com.bguina.eurosport.test.presentation.ui.articlelist
 
 import app.cash.turbine.test
 import com.bguina.eurosport.test.domain.interactor.ListSportArticlesUseCase
@@ -18,7 +18,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
-class HomeViewModelTests {
+class ArticleListViewModelTests {
 
     @MockK
     private lateinit var listSportArticlesUseCase: ListSportArticlesUseCase

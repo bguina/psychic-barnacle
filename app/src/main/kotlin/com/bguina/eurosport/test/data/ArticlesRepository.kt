@@ -22,6 +22,7 @@ class ArticlesRepository @Inject constructor(
 
     private fun StoryEntity.toDomain(): Article.Story = Article.Story(
         date = this.date ?: throw NoSuchFieldException("date"),
+        sport = this.sport ?: throw NoSuchFieldException("sport"),
         title = this.title ?: throw NoSuchFieldException("title"),
         content = this.content ?: throw NoSuchFieldException("content"),
         imageUrl = this.imageUrl ?: throw NoSuchFieldException("imageUrl"),
@@ -30,6 +31,7 @@ class ArticlesRepository @Inject constructor(
 
     private fun VideoEntity.toDomain(): Article.Video = Article.Video(
         date = this.date ?: throw NoSuchFieldException("date"),
+        sport = this.sport ?: throw NoSuchFieldException("sport"),
         title = this.title ?: throw NoSuchFieldException("title"),
         videoUrl = this.url ?: throw NoSuchFieldException("url"),
         viewCount = this.viewCount ?: throw NoSuchFieldException("viewCount"),

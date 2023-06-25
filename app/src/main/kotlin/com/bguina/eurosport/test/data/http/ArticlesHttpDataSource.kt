@@ -41,6 +41,7 @@ class ArticlesHttpDataSource @Inject constructor(
 
     private fun StoryDto.toEntity(): StoryEntity = StoryEntity(
         date = this.date?.toLong()?.times(1000),
+        sport = this.sport?.name,
         title = this.title,
         content = this.teaser,
         imageUrl = this.image,
@@ -49,6 +50,7 @@ class ArticlesHttpDataSource @Inject constructor(
 
     private fun VideoDto.toEntity(): VideoEntity = VideoEntity(
         date = this.date?.toLong()?.times(1000),
+        sport = this.sport?.name,
         title = this.title,
         url = this.url,
         viewCount = this.views,

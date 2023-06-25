@@ -95,6 +95,7 @@ fun StoryArticleCard(
     onArticleClicked: (Article) -> Unit,
 ) {
     ArticleCard(
+        sport = article.sport,
         title = article.title,
         mediaInfo = stringResource(
             R.string.article_headline_author_timeago,
@@ -118,6 +119,7 @@ fun VideoArticleCard(
     onArticleClicked: (Article) -> Unit,
 ) {
     ArticleCard(
+        sport = article.sport,
         title = article.title,
         mediaInfo = stringResource(R.string.article_headline_video_viewcount, article.viewCount),
         onArticleClicked = { onArticleClicked(article) },
