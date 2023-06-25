@@ -5,6 +5,7 @@ sealed class Article(
 ) {
     class Story(
         date: Long = 0,
+        val title: String = "",
         val content: String = "",
         val imageUrl: String = "",
         val author: String = "",
@@ -12,6 +13,7 @@ sealed class Article(
 
     class Video(
         date: Long = 0,
+        val title: String = "",
         val videoUrl: String = "",
         val viewCount: Long = 0,
     ) : Article(date)

@@ -61,6 +61,10 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("androidx.navigation:navigation-compose:2.6.0")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.1")
+    implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation("io.coil-kt:coil-video:2.4.0")
+    implementation("com.github.marlonlom:timeago:4.0.3")
+    implementation("com.google.android.exoplayer:exoplayer:2.18.7")
 
     // Hilt
     implementation("com.google.dagger:hilt-android:2.46.1")

@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Eurosport</string>
+    <string name="articlelist_title">FEATURED</string>
+    <string name="article_headline_author_timeago">By %1$s - %2$s</string>
+    <string name="article_headline_video_viewcount">%1$d views</string>
 </resources>

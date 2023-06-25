@@ -9,21 +9,17 @@ import javax.inject.Inject
 class ListSportArticlesUseCase @Inject constructor(
     private val articlesRepository: IArticlesRepository,
 ) {
-    suspend operator fun invoke(): List<Article> = withContext(Dispatchers.IO) {
+    suspend operator fun invoke(): List<Article> = withContext(Dispatchers.Main) {
         articlesRepository.listArticlesByDateAsc()
             .alternatingBetweenStoriesAndVideos()
     }
 
     private fun List<Article>.alternatingBetweenStoriesAndVideos(): List<Article> {
-        var awaitStory = true
+        val stories = filterIsInstance<Article.Story>()
+        val videos = filterIsInstance<Article.Video>()
 
-        return fold(emptyList()) { acc, article ->
-            if ((awaitStory && article is Article.Story) ||
-                (!awaitStory && article is Article.Video)
-            ) {
-                awaitStory = !awaitStory
-                acc + article
-            } else acc
-        }
+        return stories.zip(videos) { story, video->
+            listOf(story, video)
+        }.flatten()
     }
 }

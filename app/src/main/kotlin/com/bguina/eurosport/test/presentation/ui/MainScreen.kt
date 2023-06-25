@@ -38,7 +38,17 @@ fun MainScreen(
 
             NavHost(navController = navController, startDestination = "articles") {
                 composable("articles") {
-                    ArticleListScreen()
+                    ArticleListScreen(
+                        onArticleClicked = { article->
+                            when (article) {
+                                is Article.Story -> {
+                                }
+                                is Article.Video -> {
+
+                                }
+                            }
+                        }
+                    )
                 }
                 composable("article-details") {
 
