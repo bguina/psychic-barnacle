@@ -1,7 +1,7 @@
-package com.bguina.eurosport.test.presentation.ui.home
+package com.bguina.eurosport.test.presentation.ui.articlelist
 
 import com.bguina.eurosport.test.domain.model.Article
 
-data class HomeUiState(
+data class ArticleListUiState(
     val articles: List<Article> = emptyList(),
 )

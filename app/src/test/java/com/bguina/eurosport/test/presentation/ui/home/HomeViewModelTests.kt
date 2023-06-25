@@ -3,6 +3,7 @@ package com.bguina.eurosport.test.presentation.ui.home
 import app.cash.turbine.test
 import com.bguina.eurosport.test.domain.interactor.ListSportArticlesUseCase
 import com.bguina.eurosport.test.domain.model.Article
+import com.bguina.eurosport.test.presentation.ui.articlelist.ArticleListViewModel
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
@@ -24,8 +25,8 @@ class HomeViewModelTests {
 
     @Before
     fun setUp() {
-        Dispatchers.setMain(UnconfinedTestDispatcher())
         MockKAnnotations.init(this, relaxUnitFun = true)
+        Dispatchers.setMain(UnconfinedTestDispatcher())
     }
 
     @After
@@ -35,7 +36,6 @@ class HomeViewModelTests {
 
     @Test
     fun `it should display the articles`() {
-        // Given
         val articles = listOf(
             Article.Story(),
             Article.Story(),
@@ -43,13 +43,10 @@ class HomeViewModelTests {
         )
         coEvery { listSportArticlesUseCase.invoke() } returns articles
 
-        // When
-        val subject = HomeViewModel(
+        val subject = ArticleListViewModel(
             listSportArticlesUseCase = listSportArticlesUseCase,
         )
-        subject.loadArticles()
 
-        // Then
         runTest {
             subject.uiState.test {
                 val state = awaitItem()
