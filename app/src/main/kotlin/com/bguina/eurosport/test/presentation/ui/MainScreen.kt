@@ -1,5 +1,6 @@
 package com.bguina.eurosport.test.presentation.ui
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -17,6 +18,7 @@ import com.bguina.eurosport.test.domain.model.Article
 import com.bguina.eurosport.test.presentation.ui.articlelist.ArticleListScreen
 import com.bguina.eurosport.test.presentation.ui.storydetails.StoryDetailsScreen
 import com.bguina.eurosport.test.presentation.ui.theme.EurosportTheme
+import com.bguina.eurosport.test.presentation.ui.videoplayer.VideoPlayerScreen
 
 @Preview
 @Composable
@@ -24,9 +26,9 @@ fun Preview() {
     EurosportTheme { MainScreen() }
 }
 
-
 @Composable
 fun MainScreen(
+    onLandscapeOrientationRequested: (Boolean) -> Unit = {},
 ) {
     Scaffold(
         modifier = Modifier
@@ -45,7 +47,7 @@ fun MainScreen(
                                 }
 
                                 is Article.Video -> {
-
+                                    navController.navigate("video_player/${article.id}")
                                 }
                             }
                         }
@@ -57,9 +59,29 @@ fun MainScreen(
                         navArgument("storyId") {
                             type = NavType.LongType
                         }
-                    )) {
+                    )
+                ) {
                     StoryDetailsScreen(
                         onBackPressed = navController::popBackStack,
+                    )
+                }
+                composable(
+                    route = "video_player/{videoId}",
+                    arguments = listOf(
+                        navArgument("videoId") {
+                            type = NavType.LongType
+                        }
+                    )
+                ) {
+                    onLandscapeOrientationRequested(true)
+                    VideoPlayerScreen(
+                        onFullscreenChanged = { isFullscreen->
+                            Log.d("MainScreen", "isFullScreen $isFullscreen")
+                            if (!isFullscreen) {
+                                onLandscapeOrientationRequested(false)
+                                navController.popBackStack()
+                            }
+                        }
                     )
                 }
             }

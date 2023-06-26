@@ -9,4 +9,8 @@ interface IArticlesRepository {
     suspend fun getStoryArticleById(
         id: Long,
     ): Article.Story?
+
+    suspend fun getVideoById(
+        id: Long,
+    ): Article.Video?
 }

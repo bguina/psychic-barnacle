@@ -26,6 +26,10 @@ class ArticlesRepository @Inject constructor(
         articlesDataSource.listStories().singleOrNull { it.id == id }?.toDomain()
     }
 
+    override suspend fun getVideoById(id: Long): Article.Video?  = withContext(Dispatchers.IO) {
+        articlesDataSource.listVideos().singleOrNull { it.id == id }?.toDomain()
+    }
+
     private fun StoryEntity.toDomain(): Article.Story = Article.Story(
         id = this.id ?: throw NoSuchFieldException("id"),
         date = this.date ?: throw NoSuchFieldException("date"),
