@@ -28,6 +28,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -37,11 +38,31 @@ import coil.compose.AsyncImage
 import coil.decode.VideoFrameDecoder
 import com.bguina.eurosport.test.R
 import com.bguina.eurosport.test.domain.model.Article
+import com.bguina.eurosport.test.presentation.ui.theme.EurosportTheme
 import com.github.marlonlom.utilities.timeago.TimeAgo
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.google.android.exoplayer2.ui.StyledPlayerView
+
+@Preview
+@Composable
+fun Preview() {
+    EurosportTheme {
+        Layout(
+            ArticleListUiState(
+                listOf(
+                    Article.Story(
+                        date = System.currentTimeMillis() - 360000,
+                        sport = "Football",
+                        title = "Title which is a little too long to be displayed on a single line",
+                        author = "Henry",
+                    ),
+                )
+            )
+        )
+    }
+}
 
 @Composable
 fun ArticleListScreen(
@@ -50,6 +71,17 @@ fun ArticleListScreen(
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
+    Layout(
+        state = state,
+        onArticleClicked = onArticleClicked
+    )
+}
+
+@Composable
+private fun Layout(
+    state: ArticleListUiState,
+    onArticleClicked: (Article) -> Unit = {}
+) {
     Scaffold(
         topBar = {
             Text(
@@ -60,7 +92,7 @@ fun ArticleListScreen(
                 text = stringResource(R.string.articlelist_title),
                 style = MaterialTheme.typography.titleMedium,
                 textAlign = TextAlign.Center,
-                color = Color.White
+                color = Color.White,
             )
         }
     ) { padding ->

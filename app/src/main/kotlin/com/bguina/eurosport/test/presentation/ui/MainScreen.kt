@@ -6,17 +6,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.bguina.eurosport.test.domain.model.Article
 import com.bguina.eurosport.test.presentation.ui.articlelist.ArticleListScreen
-import com.bguina.eurosport.test.presentation.ui.articlelist.ArticleListViewModel
 import com.bguina.eurosport.test.presentation.ui.theme.EurosportTheme
 
 @Preview
@@ -39,10 +37,12 @@ fun MainScreen(
             NavHost(navController = navController, startDestination = "articles") {
                 composable("articles") {
                     ArticleListScreen(
-                        onArticleClicked = { article->
+                        onArticleClicked = { article ->
                             when (article) {
                                 is Article.Story -> {
+                                    navController.navigate("story_details/${article.id}")
                                 }
+
                                 is Article.Video -> {
 
                                 }
@@ -50,7 +50,11 @@ fun MainScreen(
                         }
                     )
                 }
-                composable("article-details") {
+                composable("story_details/{storyId}", arguments = listOf(
+                    navArgument("storyId") {
+                        type = NavType.LongType
+                    }
+                )) {
 
                 }
             }
