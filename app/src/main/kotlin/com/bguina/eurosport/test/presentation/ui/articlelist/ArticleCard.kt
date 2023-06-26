@@ -11,16 +11,30 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.bguina.eurosport.test.presentation.ui.common.SportBanner
+import com.bguina.eurosport.test.presentation.ui.theme.EurosportTheme
+
+@Preview
+@Composable
+fun PreviewArticleCard() {
+    EurosportTheme {
+        ArticleCard(
+            sport = "football",
+            title = "Title which is a little too long to be displayed on a single line",
+            articleInfo = "article info",
+        ) {
+
+        }
+    }
+}
 
 @Composable
 fun ArticleCard(
     sport: String,
     title: String,
-    mediaInfo: String,
+    articleInfo: String,
     onArticleClicked: () -> Unit = {},
     bannerContent: @Composable () -> Unit,
 ) {
@@ -35,17 +49,14 @@ fun ArticleCard(
             sport = sport,
             bannerContent = bannerContent,
         )
-        Column(modifier = Modifier.padding(12.dp, 0.dp)) {
-
+        Column(modifier = Modifier.padding(16.dp, 0.dp)) {
             Text(
                 text = title,
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
-                lineHeight = 18.sp,
+                style = MaterialTheme.typography.titleLarge,
             )
             Text(
-                modifier=Modifier.padding(0.dp, 0.dp, 0.dp, 8.dp),
-                text = mediaInfo,
+                modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 8.dp),
+                text = articleInfo,
                 style = MaterialTheme.typography.bodySmall,
                 color = Color.Gray,
             )

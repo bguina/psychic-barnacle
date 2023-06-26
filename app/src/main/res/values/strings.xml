@@ -3,4 +3,6 @@
     <string name="articlelist_title">FEATURED</string>
     <string name="article_headline_author_timeago">By %1$s — %2$s</string>
     <string name="article_headline_video_viewcount">%1$d views</string>
+
+    <string name="story_details_author">By %1$s</string>
 </resources>

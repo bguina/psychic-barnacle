@@ -15,6 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.bguina.eurosport.test.domain.model.Article
 import com.bguina.eurosport.test.presentation.ui.articlelist.ArticleListScreen
+import com.bguina.eurosport.test.presentation.ui.storydetails.StoryDetailsScreen
 import com.bguina.eurosport.test.presentation.ui.theme.EurosportTheme
 
 @Preview
@@ -50,12 +51,16 @@ fun MainScreen(
                         }
                     )
                 }
-                composable("story_details/{storyId}", arguments = listOf(
-                    navArgument("storyId") {
-                        type = NavType.LongType
-                    }
-                )) {
-
+                composable(
+                    route = "story_details/{storyId}",
+                    arguments = listOf(
+                        navArgument("storyId") {
+                            type = NavType.LongType
+                        }
+                    )) {
+                    StoryDetailsScreen(
+                        onBackPressed = navController::popBackStack,
+                    )
                 }
             }
         }

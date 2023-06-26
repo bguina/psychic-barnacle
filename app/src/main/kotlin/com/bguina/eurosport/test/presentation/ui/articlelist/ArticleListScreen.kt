@@ -38,12 +38,13 @@ import coil.compose.AsyncImage
 import coil.decode.VideoFrameDecoder
 import com.bguina.eurosport.test.R
 import com.bguina.eurosport.test.domain.model.Article
+import com.bguina.eurosport.test.presentation.ext.timeAgo
 import com.bguina.eurosport.test.presentation.ui.theme.EurosportTheme
-import com.github.marlonlom.utilities.timeago.TimeAgo
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.google.android.exoplayer2.ui.StyledPlayerView
+import java.util.Date
 
 @Preview
 @Composable
@@ -129,11 +130,7 @@ fun StoryArticleCard(
     ArticleCard(
         sport = article.sport,
         title = article.title,
-        mediaInfo = stringResource(
-            R.string.article_headline_author_timeago,
-            article.author,
-            TimeAgo.using(article.date)
-        ),
+        articleInfo = stringResource(R.string.article_headline_author_timeago, article.author, Date(article.date).timeAgo()),
         onArticleClicked = { onArticleClicked(article) },
     ) {
         AsyncImage(
@@ -153,7 +150,7 @@ fun VideoArticleCard(
     ArticleCard(
         sport = article.sport,
         title = article.title,
-        mediaInfo = stringResource(R.string.article_headline_video_viewcount, article.viewCount),
+        articleInfo = stringResource(R.string.article_headline_video_viewcount, article.viewCount),
         onArticleClicked = { onArticleClicked(article) },
     ) {
         Box(contentAlignment = Alignment.Center) {
