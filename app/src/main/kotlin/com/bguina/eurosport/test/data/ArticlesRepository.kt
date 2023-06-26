@@ -20,7 +20,14 @@ class ArticlesRepository @Inject constructor(
             .sortedWith(compareBy { it.date })
     }
 
+    override suspend fun getStoryArticleById(
+        id: Long,
+    ): Article.Story? = withContext(Dispatchers.IO) {
+        articlesDataSource.listStories().singleOrNull { it.id == id }?.toDomain()
+    }
+
     private fun StoryEntity.toDomain(): Article.Story = Article.Story(
+        id = this.id ?: throw NoSuchFieldException("id"),
         date = this.date ?: throw NoSuchFieldException("date"),
         sport = this.sport ?: throw NoSuchFieldException("sport"),
         title = this.title ?: throw NoSuchFieldException("title"),
@@ -30,6 +37,7 @@ class ArticlesRepository @Inject constructor(
     )
 
     private fun VideoEntity.toDomain(): Article.Video = Article.Video(
+        id = this.id ?: throw NoSuchFieldException("id"),
         date = this.date ?: throw NoSuchFieldException("date"),
         sport = this.sport ?: throw NoSuchFieldException("sport"),
         title = this.title ?: throw NoSuchFieldException("title"),

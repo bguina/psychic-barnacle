@@ -35,14 +35,31 @@ class ArticlesRepositoryTests {
     @Test
     fun `listArticlesByDateAsc should list articles sorted by date asc`() {
         // Given
+        val dummyStory = StoryEntity(
+            id = 0,
+            date = 1,
+            sport = "",
+            title = "",
+            content = "",
+            imageUrl = "",
+            author = ""
+        )
+        val dummyVideo = VideoEntity(
+            id = 0,
+            date = 5,
+            sport = "",
+            title = "",
+            url = "",
+            viewCount = 0
+        )
         val stories = listOf(
-            StoryEntity(date = 1, title="", content = "", imageUrl = "", author = ""),
-            StoryEntity(date = 3, title="", content = "", imageUrl = "", author = ""),
-            StoryEntity(date = 2, title="", content = "", imageUrl = "", author = ""),
+            dummyStory.copy(date = 1),
+            dummyStory.copy(date = 3),
+            dummyStory.copy(date = 2),
         )
         val videos = listOf(
-            VideoEntity(date = 5, title="", url = "", viewCount = 0),
-            VideoEntity(date = 3, title="", url = "", viewCount = 0),
+            dummyVideo.copy(date = 5),
+            dummyVideo.copy(date = 3),
         )
         coEvery { articlesDataSource.listStories() } returns stories
         coEvery { articlesDataSource.listVideos() } returns videos

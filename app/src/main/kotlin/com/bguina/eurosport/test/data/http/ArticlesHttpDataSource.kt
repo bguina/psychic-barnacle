@@ -40,6 +40,7 @@ class ArticlesHttpDataSource @Inject constructor(
         .map { it.toEntity() }
 
     private fun StoryDto.toEntity(): StoryEntity = StoryEntity(
+        id = this.id?.toLong(),
         date = this.date?.toLong()?.times(1000),
         sport = this.sport?.name,
         title = this.title,
@@ -49,6 +50,7 @@ class ArticlesHttpDataSource @Inject constructor(
     )
 
     private fun VideoDto.toEntity(): VideoEntity = VideoEntity(
+        id = this.id?.toLong(),
         date = this.date?.toLong()?.times(1000),
         sport = this.sport?.name,
         title = this.title,
